@@ -27,7 +27,7 @@ public class Ground : MonoBehaviour
         for (int i = 0; i < collision.contactCount; i++)
         {
             _normal = collision.GetContact(i).normal;
-            OnGround |= _normal.y > walkableAngle * Mathf.Deg2Rad;
+            OnGround |= _normal.y > (90-walkableAngle) * Mathf.Deg2Rad;
         }
     }
     private void RetrieveFriction(Collision2D collision)
