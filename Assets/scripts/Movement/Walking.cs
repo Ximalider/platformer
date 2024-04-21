@@ -9,7 +9,7 @@ public class Walking : MonoBehaviour
     [SerializeField, Range(0f, 100f)] private float maxAirAcceleration = 35f;
     [Space]
     [SerializeField] private Rigidbody2D body;
-    [SerializeField] private Ground ground;
+    [SerializeField] private CollisionDataRetriever ground;
     [Space]
     [SerializeField] private CharacterAnimator animator;
 

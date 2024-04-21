@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,20 +13,20 @@ public interface DamageAble
     public float TakeDamage(DamageInfo damageInfo);
 }
 
-public interface Health
+public interface IHealth
 {
     public float Max { get; }
     public float Ratio { get; }
     bool IsAlive { get; }
 
-    public event Action<Health, DamageInfo> onDamage;
-    public event Action<Health, DamageInfo> onDeath;
+    public event Action<IHealth, DamageInfo> onDamage;
+    public event Action<IHealth, DamageInfo> onDeath;
 
     bool CanBeDamaged(DamageInfo damageInfo);
     float TakeDamage(DamageInfo damageInfo);
 }
 
-public class Health : MonoBehaviour, Health
+public class Health : MonoBehaviour, IHealth
 {
     [SerializeField] private float max;
     [SerializeField] private float current;
@@ -42,8 +43,8 @@ public class Health : MonoBehaviour, Health
 
     public bool IsAlive => current > 0f;
 
-    public event Action<Health, DamageInfo> onDamage;
-    public event Action<Health, DamageInfo> onDeath;
+    public event Action<IHealth, DamageInfo> onDamage;
+    public event Action<IHealth, DamageInfo> onDeath;
     private void OnValidate()
     {
         Current = Current;
@@ -59,6 +60,6 @@ public class Health : MonoBehaviour, Health
         var oldCurrent = Current;
         onDamage?.Invoke(this, damageInfo);
         if (!IsAlive) onDeath?.Invoke(this, damageInfo);
-        return Mathf.Abc(oldCurrent - Current);
+        return Mathf.Abs(oldCurrent - Current);
     }
 }

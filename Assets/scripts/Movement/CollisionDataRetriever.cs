@@ -3,6 +3,7 @@ using UnityEngine;
 public class CollisionDataRetriever : MonoBehaviour
 {
     [SerializeField, Range(0f, 90f)] private float walkableAngle = 40f;
+    [SerializeField, Range(0f, 90f)] private float wallAngle = 90f;
     public bool OnGround { get; private set; }
     public bool OnWall { get; private set; }
 
@@ -32,9 +33,9 @@ public class CollisionDataRetriever : MonoBehaviour
     {
         for (int i = 0; i < collision.contactCount; i++)
         {
-            _normal = collision.GetContact(i).normal;
-            OnGround |= _normal.y > (90-walkableAngle) * Mathf.Deg2Rad;
-            OnWall = Mathf.Abc(ContactNormal.x) >= 0.9f;
+            ContactNormal = collision.GetContact(i).normal;
+            OnGround |= ContactNormal.y > (90 - walkableAngle) * Mathf.Deg2Rad;
+            OnWall = !OnGround && ContactNormal.y > (90 - wallAngle) * Mathf.Deg2Rad;
         }
     }
     private void RetrieveFriction(Collision2D collision)

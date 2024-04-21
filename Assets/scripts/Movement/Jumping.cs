@@ -12,7 +12,7 @@ public class Jumping : MonoBehaviour
     [SerializeField, Range(0f, 5f)] private float upwardMovementMultiplier = 1.7f;
     [Space]
     [SerializeField] private Rigidbody2D body;
-    [SerializeField] private Ground ground;
+    [SerializeField] private CollisionDataRetriever ground;
 
     private Vector2 _velocity;
 

@@ -1,20 +1,24 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Character : MonoBehaviour
 {
-    [Serializrable]
+    [Serializable]
     private class HealthDecorators
     {
         [SerializeField] public FlatDamageDecorator flatDamage;
         [SerializeField] public DamageCooldownDecorator damageCooldown;
     }
+    
     [SerializeField] private Health health;
     [Space]
     [SerializeField] private CharacterAnimator animator;
     [Space]
     [SerializeField] private HealthDecorators decorators;
 
+    private IHealth _health;
+    
     private Rigidbody2D _rigidbody;
 
     private void Awake()
@@ -37,9 +41,9 @@ public class Character : MonoBehaviour
     }
     private void Death(Health component, DamageInfo damageInfo)
     {
-        //+анимация -управление
+        //+пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ -пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     }
-    private void Death(Health component, DamageInfo damageInfo)
+    private void Death(IHealth component, DamageInfo damageInfo)
     {
         animator.Hurt();
     }
@@ -51,11 +55,16 @@ public class Character : MonoBehaviour
     {
         _health = health;
         DecorateHealth(decorators.flatDamage);
-        DecorateHealth(decorators.DamageCooldown);
+        DecorateHealth(decorators.damageCooldown);
     }
 
     public void DecorateHealth(HealthDecorator decorator)
     {
-        _health = decorator.Asign(_health) ?? _health;
+        _health = decorator.Assign(_health) ?? _health;
     }
+}
+
+public class FlatDamageDecorator : HealthDecorator
+{
+    
 }
