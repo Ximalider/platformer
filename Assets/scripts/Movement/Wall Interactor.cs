@@ -8,7 +8,7 @@ public class WallInteractor : MonoBehaviour
     [SerializeField] private Vector2 _wallJumpBounce = new Vector2(10.7f, 10f);
 
     private CollisionDataRetriever _collisionDataRetriever;
-    private RigidBody2D _body;
+    private rigidBody2D _body;
     private Controller _controller;
 
     private Vector2 _velocity;

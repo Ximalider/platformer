@@ -32,9 +32,9 @@ public class CollisionDataRetriever : MonoBehaviour
     {
         for (int i = 0; i < collision.contactCount; i++)
         {
-            _normal = collision.GetContact(i).normal;
-            OnGround |= _normal.y > (90-walkableAngle) * Mathf.Deg2Rad;
-            OnWall = Mathf.Abc(ContactNormal.x) >= 0.9f;
+            ContactNormal = collision.GetContact(i).normal;
+            OnGround |= ContactNormal.y > (90-walkableAngle) * Mathf.Deg2Rad;
+            OnWall = Mathf.Abs(ContactNormal.x) >= 0.9f;
         }
     }
     private void RetrieveFriction(Collision2D collision)

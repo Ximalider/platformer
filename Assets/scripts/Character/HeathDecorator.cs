@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HealthDecorator: MonoBehaviour
 {
-    private IHealth _health;
+    private Health _health;
 
     public virtual float Max => _health.Max;
 
