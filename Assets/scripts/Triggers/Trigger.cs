@@ -4,17 +4,21 @@ using UnityEngine;
 public enum ActivationType
 {
     Enter,
-    Exit
+    Exit,
+    Interactive
 }
-
-public abstract class Trigger : MonoBehaviour
+public abstract class Trigger : MonoBehaviour, Interactive
 {
     [Header("Trigger")]
     [SerializeField] private ActivationType activation;
+    [SerializeField] private int priority;
     [SerializeField] private string[] tags = { "Player" };
     [SerializeField] private bool once;
 
     private bool _done;
+
+    public int Priority => priority;
+ 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -35,4 +39,18 @@ public abstract class Trigger : MonoBehaviour
     }
 
     public abstract void Activate(Collider2D other);
+
+    public void Interact(Interactor interactor)
+    {
+        if (!CanInteractWith(interactor)) return;
+        _done = once;
+        Activate(interactor.GetComponent<Collider2D>());
+    }
+
+    public bool CanInteractWith(Interactor interactor)
+    {
+        return tags.Contains(interactor.tag)
+            && activation == ActivationType.Interactive
+            && !_done;
+    }
 }

@@ -1,12 +1,17 @@
 using UnityEngine;
 
-public class Ground : MonoBehaviour
+public class CollisionDataRetriever : MonoBehaviour
 {
     [SerializeField, Range(0f, 90f)] private float walkableAngle = 40f;
     public bool OnGround { get; private set; }
+    public bool OnWall { get; private set; }
+
     public float Friction { get; private set; }
-    private Vector2 _normal;
+
+    public Vector2 ContactNormal { get; private set; }
+
     private PhysicsMaterial2D _material;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         EvaluateCollision(collision);
@@ -21,13 +26,15 @@ public class Ground : MonoBehaviour
     {
         OnGround = false;
         Friction = 0;
+        OnWall = false;
     }
-    private void EvaluateCollision(Collision2D collision)
+    public void EvaluateCollision(Collision2D collision)
     {
         for (int i = 0; i < collision.contactCount; i++)
         {
             _normal = collision.GetContact(i).normal;
             OnGround |= _normal.y > (90-walkableAngle) * Mathf.Deg2Rad;
+            OnWall = Mathf.Abc(ContactNormal.x) >= 0.9f;
         }
     }
     private void RetrieveFriction(Collision2D collision)

@@ -37,6 +37,10 @@ public class Jumping : MonoBehaviour
     public void Jump()
     {
         _desiredJump = true;
+        if (_velocity.y == 0)
+        {
+            _jumpPhase = 0;
+        }
     }
     private void DoJump()
     {

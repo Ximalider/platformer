@@ -27,7 +27,7 @@ public class SwitchTrigger : Trigger
                 case SwitchType.PingPong:
                     return (int)Mathf.PingPong(state, events.Length - 1);
                 case SwitchType.Once:
-                    return State;
+                    return state;
                 default:
                 throw new ArgumentOutOfRangeException();
             }
